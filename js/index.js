@@ -1,6 +1,7 @@
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
     startGame();
+    setInterval(createObstacle, 60);
   };
 };
 const myObstacles = [];
@@ -16,6 +17,23 @@ carImg.src = "images/car.png";
 
 let posX = 220;
 let posY = 450;
+let speedY = 10;
+
+let frames = 0;
+
+class Obstacle {
+  constructor(width, height, x, y) {
+    this.width = width;
+    this.height = height;
+    this.color = "#870007";
+    this.x = x;
+    this.y = y;
+  }
+  update() {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
 
 function startGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -23,10 +41,16 @@ function startGame() {
   ctx.drawImage(carImg, 220, 450, 60, 120);
 }
 
-function update() {
+function clear() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(carImg, posX, posY, 60, 120);
+}
+
+function newPosition(x, y, width, height) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#870007";
+  ctx.fillRect(x, y, width, height);
 }
 
 document.addEventListener("keydown", (e) => {
@@ -36,7 +60,6 @@ document.addEventListener("keydown", (e) => {
       break;
     case "ArrowRight":
       posX += 10;
-      console.log(posX + carImg.width);
       break;
   }
   if (posX < 0) {
@@ -44,8 +67,43 @@ document.addEventListener("keydown", (e) => {
   } else if (posX > 598 - carImg.width) {
     posX = 598 - carImg.width;
   }
-  update();
+  clear();
 });
+
+// function createObstacle() {
+//   let x = Math.floor(Math.random() * canvas.width);
+//   let y = 0;
+//   let height = 20;
+//   let minWidth = 80;
+//   let maxWidth = 300;
+//   let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
+//   newPosition(x, y, width, height);
+// }
+
+// for (i = 0; i < myObstacles.length; i++) {
+//   myObstacles[i].y += -1;
+//   myObstacles[i].update();
+// }
+//   frames += 1;
+//   if (frames % 120 === 0) {
+//     let x = Math.floor(Math.random() * canvas.width);
+//     let y = 0;
+//     let height = 20;
+//     let minWidth = 80;
+//     let maxWidth = 300;
+//     let width = Math.floor(
+//       Math.random() * (maxWidth - minWidth + 1) + minWidth
+//     );
+//     myObstacles.push(new Obstacle(x, y, width, height));
+//     for (i = 0; i < myObstacles.length; i++) {
+//       ctx.fillStyle = "#870007";
+//       ctx.fillRect(x, y, width, height);
+//       y += speedY;
+//     }
+//   }
+//   //}
+//   console.log(myObstacles);
+// }
 
 // window.onload = () => {
 //   document.getElementById("start-button").onclick = () => {
