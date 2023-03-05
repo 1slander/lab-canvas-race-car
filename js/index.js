@@ -4,10 +4,20 @@ window.onload = () => {
     setInterval(createObstacle, 60);
   };
 };
-const myObstacles = [];
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
+
+const myObstacles = [];
+
+let frames = 0;
+let score = 0;
+
+let speedY = 10;
+let speedX = 5;
+
+let posX = 220;
+let posY = 450;
 
 const roadImg = new Image();
 roadImg.src = "images/road.png";
@@ -15,23 +25,20 @@ roadImg.src = "images/road.png";
 const carImg = new Image();
 carImg.src = "images/car.png";
 
-let posX = 220;
-let posY = 450;
-let speedY = 10;
-
-let frames = 0;
-
 class Obstacle {
-  constructor(width, height, x, y) {
-    this.width = width;
-    this.height = height;
-    this.color = "#870007";
+  constructor(x) {
     this.x = x;
-    this.y = y;
+    this.y = -10;
+    this.width = 130;
+    this.height = 20;
+    this.color = "#870007";
   }
-  update() {
+  draw() {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+  moveVertically() {
+    this.y += 5;
   }
 }
 
