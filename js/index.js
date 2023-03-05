@@ -50,10 +50,12 @@ function startGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(carImg, 220, 450, 60, 120);
+  //create objects
   objectInterval = setInterval(() => {
     createObstacle();
     update();
   }, 2000);
+  //move objects
   gameInterval = setInterval(update, 1000 / 60);
 }
 
@@ -65,6 +67,7 @@ function update() {
   ctx.font = "19px Arial";
   ctx.fillText(`Score: ${score}`, 10, 50);
 
+  //Could it go in another function?
   myObstacles.forEach((obstacle) => {
     obstacle.draw();
     obstacle.moveVertically();
@@ -90,10 +93,13 @@ function update() {
 
   myObstacles = myObstacles.filter((obstacle) => obstacle.y < canvas.height);
 }
+
 function createObstacle() {
   let x = Math.floor(Math.random() * 350);
   myObstacles.push(new Obstacle(x));
 }
+
+//Need to add a way of re-start the games once Game over.
 
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
